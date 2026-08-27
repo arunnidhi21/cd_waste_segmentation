@@ -1,11 +1,11 @@
 # 🏗️ Construction & Demolition (C&D) Waste — Instance Segmentation
 
-> **Computer Vision project for detecting and segmenting construction & demolition waste using YOLOv8-seg and Mask R-CNN.**
+> Computer Vision project for detecting and segmenting construction & demolition waste using YOLOv8-seg and Mask R-CNN.
 
-[![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)](https://www.python.org/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-Deep%20Learning-ee4c2c?logo=pytorch)](https://pytorch.org/)
-[![YOLOv8](https://img.shields.io/badge/YOLOv8-Segmentation-purple)](https://docs.ultralytics.com/)
-[![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-5c3ee8?logo=opencv)](https://opencv.org/)
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
+![PyTorch](https://img.shields.io/badge/PyTorch-Deep%20Learning-ee4c2c?logo=pytorch)
+![YOLOv8](https://img.shields.io/badge/YOLOv8-Segmentation-purple)
+![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-5c3ee8?logo=opencv)
 
 ---
 
@@ -13,7 +13,7 @@
 
 Construction and demolition waste contains multiple overlapping materials, making automated sorting challenging.
 
-This project develops and compares two **instance segmentation approaches**:
+This project develops and compares two instance segmentation approaches:
 
 - **YOLOv8-seg**
 - **Mask R-CNN**
@@ -26,7 +26,7 @@ The models identify and segment five construction and demolition waste categorie
 - 🔩 Metal
 - 🧴 Plastic
 
-The goal is to evaluate model accuracy, segmentation quality, inference speed, and robustness to object occlusion for potential waste-sorting applications.
+The goal is to evaluate model accuracy, segmentation quality, inference speed, and robustness to object occlusion for potential automated waste-sorting applications.
 
 ---
 
@@ -43,7 +43,7 @@ The goal is to evaluate model accuracy, segmentation quality, inference speed, a
 
 ## 📊 Dataset
 
-The project uses a **synthetic 420-image dataset**.
+The project uses a synthetic dataset containing:
 
 | Property | Details |
 |---|---|
@@ -54,10 +54,10 @@ The project uses a **synthetic 420-image dataset**.
 | Image Resolution | 640 × 640 |
 | Material Classes | 5 |
 | Total Annotations | 2,743 |
-| Avg. Objects/Image | 6.5 |
-| Avg. Occlusion | ~34% |
+| Average Objects/Image | 6.5 |
+| Average Occlusion | ~34% |
 
-### Classes
+### Dataset Classes
 
 1. Concrete
 2. Brick
@@ -65,15 +65,19 @@ The project uses a **synthetic 420-image dataset**.
 4. Metal
 5. Plastic
 
-The dataset uses **COCO-style polygon segmentation annotations** and procedural textures to create realistic material appearances.
+### Dataset Statistics
+
+![Dataset Statistics](results/01_dataset_stats.png)
 
 ---
 
-## 🧠 Models
+## 🧠 Models & Training
+
+Both models were trained for **50 epochs** on the synthetic dataset.
 
 ### YOLOv8-seg
 
-YOLOv8-seg provides object detection and instance segmentation in a single efficient architecture.
+YOLOv8-seg performs object detection and instance segmentation using a single efficient architecture.
 
 **Advantages:**
 
@@ -89,44 +93,66 @@ Mask R-CNN performs object detection and generates an individual segmentation ma
 **Advantages:**
 
 - Strong instance-level segmentation
+- Detailed segmentation masks
 - Well-established computer vision architecture
-- Useful for detailed segmentation analysis
 
 ---
 
-## 🏋️ Training
+## 📉 Training & Validation
 
-Both models were trained for **50 epochs** using the synthetic C&D waste dataset.
+### Loss Curves
 
-The experiments focus on:
+![Training Loss Curves](results/02_loss_curves.png)
 
-- Detection quality
-- Instance segmentation accuracy
-- Mask quality
-- Inference speed
-- Occlusion robustness
+The training curves are used to analyze model convergence and training behavior over the 50 epochs.
 
 ---
 
-## 📈 Results
+## 📈 Model Performance
 
-| Metric | YOLOv8-seg | Mask R-CNN |
-|---|---:|---:|
-| Mask mAP@0.5 | **0.821** | 0.793 |
-| Mask mAP@0.5:0.95 | ~0.55 | ~0.54 |
-| Inference Speed | **Faster** | Slower |
+### mAP Curves
 
-### 🏆 Best Performing Model
+![mAP Curves](results/03_map_curves.png)
 
-**YOLOv8-seg** achieved better overall performance in this experiment.
+### Precision-Recall Curves
 
-It achieved:
+![Precision Recall Curves](results/04_pr_curves.png)
 
-- Higher Mask mAP@0.5
-- Slightly higher Mask mAP@0.5:0.95
-- Faster inference
+These curves provide a more detailed view of model detection and segmentation performance.
 
-Therefore, **YOLOv8-seg is the preferred model for potential near-real-time waste-sorting applications**.
+---
+
+## 🧮 Confusion Matrices
+
+![Confusion Matrices](results/05_confusion_matrices.png)
+
+The confusion matrices help analyze class-level prediction behavior across the five waste categories.
+
+---
+
+## 📊 Per-Class Performance
+
+![Per Class Average Precision](results/06_per_class_ap.png)
+
+This visualization compares performance across individual material classes.
+
+---
+
+## ⚡ Speed vs Accuracy
+
+![Speed Accuracy Comparison](results/07_speed_accuracy.png)
+
+The comparison demonstrates the trade-off between segmentation accuracy and inference speed.
+
+YOLOv8-seg provides a strong balance between performance and inference efficiency, making it suitable for potential near-real-time waste-sorting applications.
+
+---
+
+## 🖼️ Sample Predictions
+
+![Sample Predictions](results/08_sample_predictions.png)
+
+The sample predictions demonstrate how the models detect and segment different construction and demolition waste materials.
 
 ---
 
@@ -134,27 +160,32 @@ Therefore, **YOLOv8-seg is the preferred model for potential near-real-time wast
 
 Construction waste objects can overlap heavily in real-world environments.
 
+![Occlusion Analysis](results/09_occlusion_analysis.png)
+
 The project evaluates how segmentation performance changes as object occlusion increases.
 
-The models remain usable up to approximately **40% occlusion**, covering a large portion of the dataset distribution.
-
-This analysis helps evaluate whether the models can handle cluttered waste scenes.
+The analysis shows that both models remain usable at moderate occlusion levels, demonstrating their ability to handle cluttered waste scenes.
 
 ---
 
-## 📊 Visualizations
+## 🏆 Results
 
-The repository contains generated visualizations for:
+| Metric | YOLOv8-seg | Mask R-CNN |
+|---|---:|---:|
+| Mask mAP@0.5 | **0.821** | 0.793 |
+| Mask mAP@0.5:0.95 | ~0.55 | ~0.54 |
+| Inference Speed | **Faster** | Slower |
 
-- Dataset distribution
-- Class distribution
-- Occlusion distribution
-- Training and validation losses
-- Model performance
-- Segmentation results
-- Occlusion robustness
+### Best Performing Model
 
-These visualizations are available in the [`results/`](results/) directory.
+**YOLOv8-seg** achieved the best overall balance between segmentation accuracy and inference speed in this experiment.
+
+Key findings:
+
+- Higher Mask mAP@0.5
+- Competitive mAP@0.5:0.95
+- Faster inference
+- Better suitability for near-real-time applications
 
 ---
 
@@ -167,12 +198,17 @@ cd_waste_segmentation/
 │   └── Capstone_Report.docx
 │
 ├── results/
-│   ├── dataset_overview.png
-│   ├── training_results.png
-│   └── other generated plots
+│   ├── 01_dataset_stats.png
+│   ├── 02_loss_curves.png
+│   ├── 03_map_curves.png
+│   ├── 04_pr_curves.png
+│   ├── 05_confusion_matrices.png
+│   ├── 06_per_class_ap.png
+│   ├── 07_speed_accuracy.png
+│   ├── 08_sample_predictions.png
+│   └── 09_occlusion_analysis.png
 │
 ├── README.md
-│
 ├── generate_dataset.py
-├── train_simulate.py
-└── generate_plots.py
+├── generate_plots.py
+└── train_simulate.py
