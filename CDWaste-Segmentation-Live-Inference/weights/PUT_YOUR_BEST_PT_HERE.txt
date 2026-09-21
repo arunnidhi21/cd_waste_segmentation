@@ -1,1 +1,0 @@
-Copy your trained CDWaste YOLOv8-seg weights here and rename them to best.pt.
