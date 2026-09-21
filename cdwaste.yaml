@@ -1,0 +1,12 @@
+path: C:/Users/appuz/OneDrive/Desktop/Projects/cd-waste-segmentation
+train: images/train
+val: images/val
+test: images/test
+
+nc: 5
+names:
+  0: concrete
+  1: brick
+  2: wood
+  3: metal
+  4: plastic
