@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CDWaste Vision — Live Segmentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="bg-glow"></div>
+<div id="scene3d"></div>
+
+<!-- NAV -->
+<header>
+  <a class="brand">CD<span>WASTE</span> VISION</a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#upload">Try It</a>
+    <a href="https://github.com/arunnidhi21/cd_waste_segmentation" target="_blank">GitHub</a>
+    <a href="#upload" class="nav-pill">Run Model →</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-copy">
+    <div class="badge"><span class="badge-dot"></span>YOLOv8-seg · Instance Segmentation</div>
+    <h1>Detect &amp; classify<br><em>construction waste</em><br>in real time.</h1>
+    <p class="hero-sub">Upload a demolition site image. The model returns pixel-level instance masks for concrete, brick, wood, metal, and plastic — in seconds.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="document.getElementById('upload').scrollIntoView({behavior:'smooth'})">Upload Image →</button>
+      <a href="https://github.com/arunnidhi21/cd_waste_segmentation" target="_blank" class="btn-ghost">View on GitHub</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-val">420</div><div class="stat-label">Synthetic images</div></div>
+      <div><div class="stat-val">5</div><div class="stat-label">Material classes</div></div>
+      <div><div class="stat-val">YOLOv8</div><div class="stat-label">Architecture</div></div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD MOCKUP -->
+  <div class="hero-visual">
+    <div class="mockup-wrap">
+      <!-- floating chips -->
+      <div class="float-chip chip-tl">
+        <div class="fc-val">94.7%</div>
+        <div class="fc-label">mAP@0.5</div>
+        <div class="fc-bar"><div class="fc-fill" style="width:94.7%"></div></div>
+      </div>
+      <div class="float-chip chip-br">
+        <div class="fc-val">312 ms</div>
+        <div class="fc-label">avg inference</div>
+        <div class="fc-bar"><div class="fc-fill" style="width:45%"></div></div>
+      </div>
+      <!-- mockup window -->
+      <div class="mockup">
+        <div class="mockup-bar">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="mockup-url">cdwaste-vision / results / run_041</span>
+        </div>
+        <div class="mockup-body">
+          <div class="mockup-sidebar">
+            <div class="sidebar-item active"><span class="sidebar-icon"></span>Dashboard</div>
+            <div class="sidebar-item"><span class="sidebar-icon"></span>Detections</div>
+            <div class="sidebar-item"><span class="sidebar-icon"></span>Classes</div>
+            <div class="sidebar-item"><span class="sidebar-icon"></span>Export</div>
+            <div class="sidebar-item"><span class="sidebar-icon"></span>Settings</div>
+          </div>
+          <div class="mockup-main">
+            <div class="kpi-row">
+              <div class="kpi"><div class="kpi-val">48</div><div class="kpi-label">Images run</div><div class="kpi-delta">↑ 12 today</div></div>
+              <div class="kpi"><div class="kpi-val">317</div><div class="kpi-label">Instances found</div><div class="kpi-delta">↑ 8.3%</div></div>
+              <div class="kpi"><div class="kpi-val">0.81</div><div class="kpi-label">Avg confidence</div><div class="kpi-delta">↑ stable</div></div>
+            </div>
+            <div class="chart-area">
+              <div class="chart-label">INSTANCES PER CLASS</div>
+              <svg class="chart-svg" viewBox="0 0 320 80" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#3b7cf4" stop-opacity=".4"/>
+                    <stop offset="100%" stop-color="#3b7cf4" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <polyline points="0,65 40,58 80,42 120,50 160,30 200,38 240,22 280,28 320,18" fill="none" stroke="#3b7cf4" stroke-width="1.5"/>
+                <polygon points="0,65 40,58 80,42 120,50 160,30 200,38 240,22 280,28 320,18 320,80 0,80" fill="url(#cg)"/>
+                <!-- dots -->
+                <circle cx="160" cy="30" r="3.5" fill="#5b9bff"/>
+                <circle cx="320" cy="18" r="3.5" fill="#5b9bff"/>
+              </svg>
+            </div>
+            <div class="detect-strip">
+              <span class="det-chip concrete">Concrete ×12</span>
+              <span class="det-chip brick">Brick ×9</span>
+              <span class="det-chip wood">Wood ×7</span>
+              <span class="det-chip metal">Metal ×5</span>
+              <span class="det-chip plastic">Plastic ×4</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <p class="section-eyebrow">What it does</p>
+  <h2 class="section-title">Pixel-level intelligence for demolition sites.</h2>
+  <div class="features-grid">
+    <div class="feat-card">
+      <div class="feat-icon">🎯</div>
+      <h3>Instance segmentation</h3>
+      <p>Every detected material gets its own polygon mask — not just a bounding box. Overlapping objects are separated cleanly.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">⚡</div>
+      <h3>Batch inference</h3>
+      <p>Drop a ZIP of hundreds of site photos. The model processes them all and returns a complete annotated gallery with per-image counts.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🏗️</div>
+      <h3>5 C&D material classes</h3>
+      <p>Trained on a 420-image synthetic dataset to detect concrete, brick, wood, metal, and plastic — the dominant waste streams on demolition sites.</p>
+    </div>
+  </div>
+</section>
+
+<!-- UPLOAD -->
+<section class="upload-section" id="upload">
+  <div class="upload-inner">
+    <div class="upload-copy">
+      <p class="section-eyebrow">Live inference</p>
+      <h2>Run the model on your images.</h2>
+      <p>Upload one image or a ZIP of images. Adjust the confidence threshold, then hit Run Model. Results appear below with masks rendered on each photo.</p>
+      <div class="material-list">
+        <div class="mat-item"><span class="mat-dot" style="background:#a8a29e"></span>Concrete</div>
+        <div class="mat-item"><span class="mat-dot" style="background:#fb923c"></span>Brick</div>
+        <div class="mat-item"><span class="mat-dot" style="background:#ca8a04"></span>Wood</div>
+        <div class="mat-item"><span class="mat-dot" style="background:#94a3b8"></span>Metal</div>
+        <div class="mat-item"><span class="mat-dot" style="background:#a78bfa"></span>Plastic</div>
+      </div>
+    </div>
+
+    <div class="upload-card">
+      <div id="drop" class="drop">
+        <div class="upload-icon">↑</div>
+        <h2>Drop your dataset</h2>
+        <p>Images or a ZIP file · JPG / PNG / WEBP / BMP</p>
+        <input id="files" type="file" multiple accept=".jpg,.jpeg,.png,.webp,.bmp,.zip">
+        <button id="browse">Choose files</button>
+        <div id="fileList"></div>
+      </div>
+      <div class="controls">
+        <label>Confidence <output id="confOut">0.25</output>
+          <input id="conf" type="range" min=".05" max=".95" step=".05" value=".25">
+        </label>
+        <button id="analyze">Run Model →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="status" class="status hidden">
+  <div class="spinner"></div>
+  <div><b>Model analyzing data</b><span id="statusText">Running YOLOv8-seg inference…</span></div>
+</section>
+
+<section id="results" class="results hidden">
+  <div class="result-head">
+    <div>
+      <p class="section-eyebrow">Model output</p>
+      <h2>Detected materials.</h2>
+    </div>
+    <div id="summary"></div>
+  </div>
+  <div id="gallery" class="gallery"></div>
+</section>
+
+<footer>
+  <span>CDWASTE VISION · YOLOv8-SEG · 5 MATERIAL CLASSES</span>
+  <span>Arunnidhi K A · Amrita Vishwa Vidyapeetham</span>
+</footer>
+
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+<script src="/static/scene3d.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>
